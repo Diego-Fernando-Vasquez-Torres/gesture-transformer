@@ -1,65 +1,69 @@
-#include <iostream>
-#include <chrono>
 #include "camera_manager.h"
 #include "hand_detector.h"
 #include "landmark_visualizer.h"
+#include <iostream>
+#include <fstream>
+#include <chrono>
 
 int main() {
-    std::cout << "---------------------------------------------------------" << std::endl;
-    std::cout << "     PIPELINE MÓDULO 1: ADQUISICIÓN E INFERENCIA REAL    " << std::endl;
-    std::cout << "---------------------------------------------------------" << std::endl;
-
-    CameraManager camManager(0);
+    CameraManager camera;
     HandDetector detector;
     LandmarkVisualizer visualizer;
 
-    if (!camManager.openCamera(640, 480)) return -1;
+    // AQUI ESTA LA CORRECCION 1
+    if (!camera.openCamera()) {
+        std::cerr << "No se pudo abrir la cámara." << std::endl;
+        return -1;
+    }
 
+    if (!detector.initialize("handpose_estimation_mediapipe_2023feb.onnx")) {
+        std::cerr << "Falló la inicialización del modelo unificado." << std::endl;
+        return -1;
+    }
 
-if (!detector.initialize("handpose_estimation_mediapipe_2023feb.onnx")) {
-    std::cerr << "Falló la inicialización del modelo unificado." << std::endl;
-    return -1;
-}
+    std::ofstream csvFile("landmarks_dataset.csv");
+    if (csvFile.is_open()) {
+        csvFile << "timestamp";
+        for (int i = 0; i < 21; ++i) {
+            csvFile << ",x" << i << ",y" << i << ",z" << i;
+        }
+        csvFile << "\n";
+    }
+
+    std::cout << "-----------------------------------------\n";
+    std::cout << "   PIPELINE MÓDULO 1: ADQUISICIÓN REAL   \n";
+    std::cout << "-----------------------------------------\n";
+    std::cout << "Grabando telemetría en 'landmarks_dataset.csv'...\n";
+    std::cout << "Presiona 'ESC' para cerrar y guardar el dataset.\n";
 
     cv::Mat frame;
     HandLandmarks landmarks;
 
-    auto startTime = std::chrono::high_resolution_clock::now();
-    int totalFrames = 0;
-    float currentFPS = 0.0f;
-
-    std::cout << "\n[OK] Sistema operativo y red neuronal en marcha. Presiona 'ESC' para cerrar." << std::endl;
-
     while (true) {
-        if (!camManager.getFrame(frame)) break;
+        if (!camera.getFrame(frame)) break;
 
-        // Inferencia en tiempo real buscando el patrón geométrico de la mano humana
-        bool hasHand = detector.detectHand(frame, landmarks);
-
-        if (hasHand) {
+        if (detector.detectHand(frame, landmarks)) {
             visualizer.renderLandmarks(frame, landmarks);
-        } else {
-            visualizer.renderNoHandAlert(frame);
+
+            if (csvFile.is_open()) {
+                auto now = std::chrono::system_clock::now();
+                auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+                csvFile << ms;
+                for (const auto& lm : landmarks) {
+                    csvFile << "," << lm.x << "," << lm.y << "," << lm.z;
+                }
+                csvFile << "\n";
+            }
         }
 
-        // Medidor de fotogramas por segundo de alta precisión
-        totalFrames++;
-        auto currentTime = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<float> elapsed = currentTime - startTime;
-        if (elapsed.count() >= 1.0f) {
-            currentFPS = totalFrames / elapsed.count();
-            totalFrames = 0;
-            startTime = currentTime;
+        cv::imshow("Gesture Transformer - Adquisición", frame);
+
+        if (cv::waitKey(1) == 27) { // Tecla ESC
+            break;
         }
-
-        visualizer.renderFPS(frame, currentFPS);
-        cv::imshow("Modulo 1 - Captura y Detección de Mano", frame);
-
-        if (cv::waitKey(1) == 27) break; // Terminar ejecución con la tecla ESC
     }
 
-    camManager.releaseCamera();
-    cv::destroyAllWindows();
-    std::cout << "Recursos de la webcam liberados correctamente." << std::endl;
+    if (csvFile.is_open()) csvFile.close();
+    std::cout << "[INFO] Recursos liberados. Dataset CSV generado exitosamente." << std::endl;
     return 0;
 }
