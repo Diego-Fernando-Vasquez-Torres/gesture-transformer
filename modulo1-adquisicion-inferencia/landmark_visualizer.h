@@ -13,4 +13,4 @@ public:
     void renderFPS(cv::Mat& frame, float fps);
 };
 
-#endif // LANDMARK_VISUALIZER_H
+#endif 

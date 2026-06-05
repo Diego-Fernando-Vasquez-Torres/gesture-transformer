@@ -5,9 +5,9 @@
 #include "landmark_visualizer.h"
 
 int main() {
-    std::cout << "=========================================================" << std::endl;
+    std::cout << "---------------------------------------------------------" << std::endl;
     std::cout << "     PIPELINE MÓDULO 1: ADQUISICIÓN E INFERENCIA REAL    " << std::endl;
-    std::cout << "=========================================================" << std::endl;
+    std::cout << "---------------------------------------------------------" << std::endl;
 
     CameraManager camManager(0);
     HandDetector detector;
@@ -17,7 +17,7 @@ int main() {
 
 
 if (!detector.initialize("handpose_estimation_mediapipe_2023feb.onnx")) {
-    std::cerr << "[CRITICO] Falló la inicialización del modelo unificado." << std::endl;
+    std::cerr << "Falló la inicialización del modelo unificado." << std::endl;
     return -1;
 }
 
@@ -55,11 +55,11 @@ if (!detector.initialize("handpose_estimation_mediapipe_2023feb.onnx")) {
         visualizer.renderFPS(frame, currentFPS);
         cv::imshow("Modulo 1 - Captura y Detección de Mano", frame);
 
-        if (cv::waitKey(1) == 27) break; // Terminar ejecución con la tecla ESC de forma limpia
+        if (cv::waitKey(1) == 27) break; // Terminar ejecución con la tecla ESC
     }
 
     camManager.releaseCamera();
     cv::destroyAllWindows();
-    std::cout << "[INFO] Recursos de la webcam liberados correctamente." << std::endl;
+    std::cout << "Recursos de la webcam liberados correctamente." << std::endl;
     return 0;
 }

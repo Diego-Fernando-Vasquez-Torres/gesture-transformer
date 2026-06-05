@@ -5,15 +5,12 @@ LandmarkVisualizer::~LandmarkVisualizer() {}
 
 void LandmarkVisualizer::renderLandmarks(cv::Mat& frame, const HandLandmarks& landmarks) {
     for (size_t i = 0; i < landmarks.size(); ++i) {
-        // Desnormalizar los valores [0.0, 1.0] devueltos por el detector al tamaño real de tu pantalla (640x480)
         int cx = static_cast<int>(landmarks[i].x * frame.cols);
         int cy = static_cast<int>(landmarks[i].y * frame.rows);
 
         if (cx >= 0 && cx < frame.cols && cy >= 0 && cy < frame.rows) {
-            // Dibujar articulación anatómica (Verde sólido)
+            // Dibujar articulación anatómica
             cv::circle(frame, cv::Point(cx, cy), 5, cv::Scalar(0, 255, 0), cv::FILLED);
-            
-            // Trazar las líneas del esqueleto conectando los nodos secuenciales
             if (i > 0 && i != 5 && i != 9 && i != 13 && i != 17) {
                 int px = static_cast<int>(landmarks[i-1].x * frame.cols);
                 int py = static_cast<int>(landmarks[i-1].y * frame.rows);

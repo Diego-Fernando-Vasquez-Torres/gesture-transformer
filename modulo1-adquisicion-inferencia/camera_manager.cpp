@@ -7,7 +7,7 @@ CameraManager::~CameraManager() { releaseCamera(); }
 bool CameraManager::openCamera(int width, int height) {
     cap.open(deviceId);
     if (!cap.isOpened()) {
-        std::cerr << "[ERROR] Hardware: No se pudo acceder a la webcam." << std::endl;
+        std::cerr << "Hardware: No se pudo acceder a la webcam." << std::endl;
         return false;
     }
     cap.set(cv::CAP_PROP_FRAME_WIDTH, width);

@@ -13,10 +13,10 @@ bool HandDetector::initialize(const std::string& modelPath) {
         net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
         
         is_initialized = true;
-        std::cout << "[INFO] Modelo Oficial OpenCV Zoo inicializado correctamente." << std::endl;
+        std::cout << "Modelo Oficial OpenCV Zoo inicializado correctamente." << std::endl;
         return true;
     } catch (const cv::Exception& e) {
-        std::cerr << "[CRITICO] Error al cargar el modelo ONNX: " << e.what() << std::endl;
+        std::cerr << "Error al cargar el modelo ONNX: " << e.what() << std::endl;
         return false;
     }
 }
@@ -71,13 +71,12 @@ bool HandDetector::detectHand(const cv::Mat& frame, HandLandmarks& output) {
             divisor = 256.0f;
         }
 
+        // PANEL DE CALIBRACIÓN EN TIEMPO REAL
         // =================================================================
-        // 🎛️ PANEL DE CALIBRACIÓN EN TIEMPO REAL (AJUSTA ESTO SI HACE FALTA)
-        // =================================================================
-        float SCALE_X = 1.15f;   // Modifica el ancho total del esqueleto
-        float OFFSET_X = 0.01f;  // MUEVE A LA DERECHA. Si le falta un poco, súbelo a 0.25f
-        float SCALE_Y = 1.05f;   // Modifica el alto total del esqueleto
-        float OFFSET_Y = 0.03f; // MUEVE ARRIBA/ABAJO. Negativo sube, positivo baja
+        float SCALE_X = 1.15f;   // Ancho total del esqueleto
+        float OFFSET_X = 0.01f;  // Negativo izquierda, positivo derecha
+        float SCALE_Y = 1.05f;   // Alto total del esqueleto
+        float OFFSET_Y = 0.03f; // Negativo sube, positivo baja
         // =================================================================
 
         for (int i = 0; i < 21; ++i) {
@@ -88,8 +87,6 @@ bool HandDetector::detectHand(const cv::Mat& frame, HandLandmarks& output) {
                 float raw_x = data[idx] / divisor;
                 float raw_y = data[idx + 1] / divisor;
                 float raw_z = data[idx + 2] / divisor;
-
-                // Aplicar multiplicadores de pantalla panorámica
                 lm.x = raw_x * SCALE_X + OFFSET_X;
                 lm.y = raw_y * SCALE_Y + OFFSET_Y;
                 lm.z = raw_z;

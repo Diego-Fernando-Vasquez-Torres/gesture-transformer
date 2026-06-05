@@ -26,4 +26,4 @@ private:
     bool is_initialized;
 };
 
-#endif // HAND_DETECTOR_H
+#endif 

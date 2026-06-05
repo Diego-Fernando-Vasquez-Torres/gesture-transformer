@@ -16,4 +16,4 @@ private:
     int deviceId;
 };
 
-#endif // CAMERA_MANAGER_H
+#endif
