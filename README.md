@@ -17,6 +17,7 @@ gesture-transformer/
 ├── README.md
 ├── modulo1-adquisicion-inferencia/
 │   ├── main.cpp
+│   ├── Makefile
 │   ├── camera_manager.cpp
 │   ├── camera_manager.h
 │   ├── hand_detector.cpp
@@ -62,7 +63,13 @@ El Módulo 1 está optimizado para correr de forma nativa en C++, mientras gener
 
 ### Opción A: Compilación en macOS / Linux
 
-Requiere GCC/Clang, OpenCV 4.x y `pkg-config`. Navegue a la carpeta del Módulo 1 y ejecute:
+Requiere GCC/Clang, OpenCV 4.x y `pkg-config`. En macOS, instale las dependencias con Homebrew:
+
+```bash
+brew install opencv pkg-config
+```
+
+Luego, navegue a la carpeta del Módulo 1 y ejecute:
 
 ```bash
 cd modulo1-adquisicion-inferencia
@@ -71,7 +78,26 @@ g++ -std=c++17 main.cpp camera_manager.cpp hand_detector.cpp landmark_visualizer
 
 ```
 
-### Opción B: Ejecución en Windows (C++)
+### Opción B: Makefile para macOS con progreso visible
+
+Como alternativa al comando manual, el Módulo 1 incluye un `Makefile` para macOS. Este muestra cada archivo que se compila, los comandos ejecutados y la etapa de enlazado, evitando que la compilación parezca detenida.
+
+Después de instalar OpenCV y `pkg-config` con Homebrew, ejecute:
+
+```bash
+cd modulo1-adquisicion-inferencia
+make
+make run
+```
+
+Para eliminar los archivos generados y volver a compilar desde cero:
+
+```bash
+make clean
+make
+```
+
+### Opción C: Ejecución en Windows (C++)
 
 Para compilar nativamente en Windows sin modificar el código:
 
