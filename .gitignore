@@ -1,2 +1,5 @@
 probar_ia
 .DS_Store
+.vs/
+out/
+.exe
