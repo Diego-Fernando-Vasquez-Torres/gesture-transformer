@@ -1,0 +1,98 @@
+{
+  "version": "1.0",
+  "total_classes": 14,
+  "classes": [
+    {
+      "id": 0,
+      "name": "puño",
+      "emoji": "✊",
+      "description": "Mano cerrada, todos los dedos doblados hacia la palma"
+    },
+    {
+      "id": 1,
+      "name": "paz",
+      "emoji": "✌️",
+      "description": "Índice y medio extendidos, separados en forma de V"
+    },
+    {
+      "id": 2,
+      "name": "pulgar_arriba",
+      "emoji": "👍",
+      "description": "Pulgar extendido hacia arriba, resto de dedos cerrados"
+    },
+    {
+      "id": 3,
+      "name": "pulgar_abajo",
+      "emoji": "👎",
+      "description": "Pulgar extendido hacia abajo, resto de dedos cerrados"
+    },
+    {
+      "id": 4,
+      "name": "rock",
+      "emoji": "🤟",
+      "description": "Índice y meñique extendidos, pulgar sobre dedos doblados"
+    },
+    {
+      "id": 5,
+      "name": "call_me",
+      "emoji": "🤙",
+      "description": "Pulgar y meñique extendidos, formando teléfono"
+    },
+    {
+      "id": 6,
+      "name": "indice_arriba",
+      "emoji": "☝️",
+      "description": "Solo el índice extendido hacia arriba"
+    },
+    {
+      "id": 7,
+      "name": "ok",
+      "emoji": "👌",
+      "description": "Pulgar e índice forman círculo, resto extendidos"
+    },
+    {
+      "id": 8,
+      "name": "dedos_cruzados",
+      "emoji": "🤞",
+      "description": "Índice y medio cruzados uno sobre otro"
+    },
+    {
+      "id": 9,
+      "name": "cinco",
+      "emoji": "🖐️",
+      "description": "Todos los dedos extendidos y separados"
+    },
+    {
+      "id": 10,
+      "name": "saludo_alien",
+      "emoji": "🖖",
+      "description": "Índice y medio separados, anular y meñique separados"
+    },
+    {
+      "id": 11,
+      "name": "metal",
+      "emoji": "🤘",
+      "description": "Índice y meñique extendidos, dedos del medio doblados"
+    },
+    {
+      "id": 12,
+      "name": "dedos_juntos",
+      "emoji": "🤌",
+      "description": "Punta de dedos índice, medio, anular y meñique juntas"
+    },
+    {
+      "id": 13,
+      "name": "dedo_medio",
+      "emoji": "🖕",
+      "description": "Solo el dedo medio extendido, resto cerrados"
+    }
+  ],
+  "metadata": {
+    "project": "Gesture Transformer C++",
+    "module": 2,
+    "total_landmarks": 21,
+    "coordinates_per_landmark": 3,
+    "csv_columns": 64,
+    "csv_format": "gesto,x0,y0,z0,...,x20,y20,z20"
+  }
+}
