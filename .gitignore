@@ -3,3 +3,6 @@ probar_ia
 modulo1-adquisicion-inferencia/build/
 modulo1-adquisicion-inferencia/landmarks_dataset.csv
 modulo1-adquisicion-inferencia/pipeline_ejecutable
+.vs/
+out/
+.exe

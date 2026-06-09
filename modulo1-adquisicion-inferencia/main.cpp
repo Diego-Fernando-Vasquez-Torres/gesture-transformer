@@ -38,6 +38,8 @@ int main() {
 
     cv::Mat frame;
     HandLandmarks landmarks;
+    cv::namedWindow("Gesture Transformer - Adquisición", cv::WINDOW_AUTOSIZE); //OJO: CAMBIO PARA CREAR UNA SOLA VEZ, problema en windows con qt6
+
 
     while (true) {
         if (!camera.getFrame(frame)) break;
