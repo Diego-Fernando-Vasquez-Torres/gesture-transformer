@@ -3,3 +3,7 @@ probar_ia
 .vs/
 out/
 .exe
+<<<<<<< HEAD
+=======
+.vscode/
+>>>>>>> 36e9af163a6a745fc292278f6a0850eaa09fd45b
